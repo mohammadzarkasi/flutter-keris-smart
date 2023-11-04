@@ -1,27 +1,51 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sized_box_for_whitespace
 
 import 'package:flutter/material.dart';
-import 'package:smart23/mycolors.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smart23/screens/s2.dart';
+import 'mycolors.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
+  final _router = GoRouter(routes: [
+    GoRoute(
+      path: '/',
+      builder: (ctx, state) => MyHomePage(),
+      routes: [
+        GoRoute(
+          path: 's2',
+          builder: (ctx, state) => Screen2(),
+        ),
+      ],
+    ),
+  ]);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Smart Trash',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(),
+      routerConfig: _router,
     );
+
+    // return MaterialApp(
+    //   title: 'Smart Trash',
+    //   debugShowCheckedModeBanner: false,
+    //   theme: ThemeData(
+    //     colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+    //     useMaterial3: true,
+    //   ),
+    //   home: const MyHomePage(),
+    // );
   }
 }
 
@@ -118,7 +142,9 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               width: 250,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  GoRouter.of(context).push('/s2');
+                },
                 child: Text('Klasifikasi'),
               ),
             ),
