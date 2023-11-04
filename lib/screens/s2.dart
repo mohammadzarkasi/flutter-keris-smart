@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:smart23/mycolors.dart';
 
 class Screen2 extends StatefulWidget {
@@ -13,25 +14,62 @@ class Screen2 extends StatefulWidget {
 class _Screen2State extends State<Screen2> {
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    var mediaPadding = MediaQuery.of(context).padding;
+    var height = size.height;
+    var width = size.width;
+    var mediaPaddingTop = mediaPadding.top;
+
     var headerHeight = 250.0;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.color1,
-        elevation: 0,
-        // toolbarOpacity: 0,
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: MyColors.color1,
+      //   elevation: 0,
+      //   // toolbarOpacity: 0,
+      // ),
       body: SafeArea(
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(
             color: MyColors.color2,
           ),
-          child: Column(
-            children: [
-              _buildHeader(height: headerHeight),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                _buildHeader(height: headerHeight),
+                _buildBody(height: height - headerHeight - mediaPaddingTop),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Container _buildBody({required double height}) {
+    return Container(
+      height: height,
+      decoration: BoxDecoration(
+        color: MyColors.color2,
+      ),
+      child: Column(
+        children: [
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('Galeri'),
+              ),
+              SizedBox(width: 20),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('Kamera'),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
@@ -50,6 +88,18 @@ class _Screen2State extends State<Screen2> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          Container(
+            width: double.infinity,
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              onPressed: () {
+                // Navigator.of(context).pop();
+                GoRouter.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back),
+              color: Colors.white,
+            ),
+          ),
           SizedBox(height: 10),
           Text(
             'going',
