@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart23/mycolors.dart';
+import 'package:image_picker/image_picker.dart';
+import '../mycolors.dart';
 
 class Screen2 extends StatefulWidget {
   const Screen2({super.key});
@@ -12,6 +15,42 @@ class Screen2 extends StatefulWidget {
 }
 
 class _Screen2State extends State<Screen2> {
+  Uint8List? _imgBytes;
+  var hasilKlasifikasi = '';
+
+  @override
+  initState() {
+    super.initState();
+  }
+
+  _ambilGambarGaleri() async {
+    var picker = ImagePicker();
+    var file = await picker.pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 512,
+      maxHeight: 384,
+    );
+    _updateImgByte(file);
+  }
+
+  _updateImgByte(XFile? file) async {
+    if (file == null) {
+      return;
+    }
+    _imgBytes = await file.readAsBytes();
+    setState(() {});
+  }
+
+  _ambilGambarKamera() async {
+    var picker = ImagePicker();
+    var file = await picker.pickImage(
+      source: ImageSource.camera,
+      maxWidth: 512,
+      maxHeight: 384,
+    );
+    _updateImgByte(file);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -55,20 +94,48 @@ class _Screen2State extends State<Screen2> {
       child: Column(
         children: [
           SizedBox(height: 10),
+          if (_imgBytes != null)
+            Image.memory(
+              _imgBytes!,
+              height: 150,
+            ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _ambilGambarGaleri();
+                },
                 child: Text('Galeri'),
               ),
               SizedBox(width: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  _ambilGambarKamera();
+                },
                 child: Text('Kamera'),
               ),
             ],
-          )
+          ),
+          if (_imgBytes != null)
+            ElevatedButton(
+              onPressed: () {},
+              child: Text('Dapatkan Klasifikasi!'),
+            ),
+          SizedBox(height: 20),
+          if (hasilKlasifikasi.isNotEmpty)
+            Container(
+              width: 300,
+              height: 80,
+              padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                border: Border.all(
+                  color: MyColors.color1,
+                ),
+              ),
+              child: Text('Jenis Sampah: $hasilKlasifikasi'),
+            ),
         ],
       ),
     );

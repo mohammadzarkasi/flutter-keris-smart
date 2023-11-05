@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smart23/screens/s2.dart';
+import 'screens/s2.dart';
 import 'mycolors.dart';
 
 void main() {
