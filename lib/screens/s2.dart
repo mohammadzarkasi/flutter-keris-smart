@@ -113,7 +113,7 @@ class _Screen2State extends State<Screen2> {
                 onPressed: () {
                   _ambilGambarKamera();
                 },
-                child: Text('Kamera'),
+                child: Text('Kamera!'),
               ),
             ],
           ),

@@ -16,7 +16,8 @@ class MyApp extends StatelessWidget {
   final _router = GoRouter(routes: [
     GoRoute(
       path: '/',
-      builder: (ctx, state) => MyHomePage(),
+      // builder: (ctx, state) => MyHomePage(),
+      builder: (ctx, state) => Home2(),
       routes: [
         GoRoute(
           path: 's2',
@@ -46,6 +47,104 @@ class MyApp extends StatelessWidget {
     //   ),
     //   home: const MyHomePage(),
     // );
+  }
+}
+
+class Home2 extends StatelessWidget {
+  const Home2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueAccent,
+      appBar: AppBar(
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.person_search_outlined),
+            Text('Kelompok 00'),
+          ],
+        ),
+        backgroundColor: Colors.amber,
+        centerTitle: true,
+        actions: [
+          IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+          IconButton(onPressed: () {}, icon: Icon(Icons.camera_alt)),
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildCard1(title: 'BTS'),
+            buildCard1(
+                title: 'Blackpink',
+                urlImg:
+                    'https://thumb.viva.co.id/media/frontend/thumbs3/2022/12/31/63afa7ca0c641-blackpink_665_374.jpg'),
+            buildCard1(title: 'Rain'),
+            // Text(
+            //   'Anggota:',
+            //   style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            // ),
+            // Text(
+            //   'Michael Jackson',
+            //   style: TextStyle(color: Colors.red, fontSize: 20),
+            // ),
+            // Text(
+            //   'Mas Bruno',
+            //   style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+            // ),
+            // Text('aguS'),
+            // ElevatedButton(
+            //   onPressed: () {},
+            //   child: Text('Tambah Anggota'),
+            // ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildCard1(
+      {String? assetImg, String? urlImg, required String title}) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+      margin: EdgeInsets.symmetric(vertical: 20, horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.red,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: urlImg != null
+                ? Image.network(urlImg)
+                : assetImg != null
+                    ? Image.asset(assetImg)
+                    : Image.asset('assets/img/bts.jpg'),
+          ),
+          Row(
+            children: [
+              Text(title),
+              Spacer(),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Colors.white,
+                  )),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.bookmark,
+                    color: Colors.white,
+                  )),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -139,15 +238,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text('Home'),
               ),
             ),
+            SizedBox(height: 10),
             Container(
               width: 250,
               child: ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).push('/s2');
+                  // GoRouter.of(context).push('/s2');
+                  context.go('/s2');
                 },
                 child: Text('Klasifikasi'),
               ),
             ),
+            SizedBox(height: 10),
             Container(
               width: 250,
               child: ElevatedButton(
